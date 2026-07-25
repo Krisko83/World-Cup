@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id       String @id @default(cuid())
+  email    String
+  password String
+
+  matches Match[] @relation("OwnedMatches")
+  liked   Match[] @relation("LikedMatches")
+
+  @@map("users")
+}
+
+model Match {
+  id          String @id @default(cuid())
+  homeTeam    String @map("home_team")
+  awayTeam    String @map("away_team")
+  homeGoals   Int    @map("home_goals")
+  awayGoals   Int    @map("away_goals")
+  stage       String
+  venue       String
+  date        String
+  imageUrl    String
+  description String
+  ownerId     String
+
+  owner User   @relation("OwnedMatches", fields: [ownerId], references: [id])
+  likes User[] @relation(name: "LikedMatches")
+
+  @@map("matches")
+}
