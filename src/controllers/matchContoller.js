@@ -73,7 +73,7 @@ matchController.get('/delete/:matchId', isAuth, async (req, res) => {
 
     const match = await matchService.remove(matchId);
 
-    res.redirect('/')
+    res.redirect('/dashboard')
 });
 
 matchController.get('/edit/:matchId', isAuth, async (req, res) => {
@@ -96,7 +96,8 @@ matchController.post('/edit/:matchId', isAuth, async (req, res) => {
         const match = CreateMatchSchema.parse(matchData);
 
         await matchService.update(match, matchId);
-        res.redirect('/')
+        
+        res.redirect(`/matches/details/${matchId}`)
     } catch (err) {
         const error = getErrorMessage(err)
         const options = createOptions(matchData);

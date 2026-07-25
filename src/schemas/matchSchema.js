@@ -2,17 +2,17 @@ import * as z from 'zod'
 
 export const CreateMatchSchema = z.object({
     homeTeam: z.string()
-        .min(3, { error: 'Home team must be at least 3 characters long' }),
+        .min(2, { error: 'Home team must be at least 2 characters long' }),
     awayTeam: z.string()
-        .min(3, { error: 'Away team must be at least 3 characters long' }),
+        .min(2, { error: 'Away team must be at least 2 characters long' }),
     homeGoals: z.coerce.number()
-        .min(0, { error: 'Goals must be equal or more then 0!' }),
+        .nonnegative({ error: 'Goals must be equal or more then 0!' }),
     awayGoals: z.coerce.number()
-        .min(0, { error: 'Goals must be equal or more then 0!' }),
+        .nonnegative( { error: 'Goals must be equal or more then 0!' }),
     stage: z.enum(['Group Stage', 'Round of 16', 'Round of 8', 'Quarter-final', 'Semi-final', 'Final'],
-        { error: 'Stage mus be ane of these options Group Stage, Round of 16, Round of 8, Quarter-final, Semi-final, Final' }),
+        { error: 'Stage must be ane of these options Group Stage, Round of 16, Round of 8, Quarter-final, Semi-final, Final' }),
     venue: z.string()
-        .min(3, { error: 'Venue team must be at least 3 characters long' }),
+        .min(5, { error: 'Venue team must be at least 5 characters long' }),
     date: z.string()
         .min(8, { error: 'Date team must be at least 8 characters long' }),
     imageUrl: z.string()

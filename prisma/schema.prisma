@@ -13,31 +13,35 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(cuid())
-  email    String @unique
-  password String
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updateAt  DateTime? @updatedAt
 
-  matches Match[] @relation("OwnedMatches")
-  liked   Match[] @relation("LikedMatches")
+  matches   Match[]  @relation("OwnedMatches")
+  liked     Match[]  @relation("LikedMatches")
 
   @@map("users")
 }
 
 model Match {
-  id          String @id @default(cuid())
-  homeTeam    String @map("home_team")
-  awayTeam    String @map("away_team")
-  homeGoals   Int    @map("home_goals")
-  awayGoals   Int    @map("away_goals")
+  id          String   @id @default(cuid())
+  homeTeam    String   @map("home_team")
+  awayTeam    String   @map("away_team")
+  homeGoals   Int      @map("home_goals")
+  awayGoals   Int      @map("away_goals")
   stage       String
   venue       String
   date        String
   imageUrl    String
   description String
   ownerId     String
+  createdAt   DateTime @default(now())
+  updateAt    DateTime? @updatedAt
 
   owner User   @relation("OwnedMatches", fields: [ownerId], references: [id])
-  likes User[] @relation(name: "LikedMatches")
+  likes User[] @relation("LikedMatches")
 
   @@map("matches")
 }

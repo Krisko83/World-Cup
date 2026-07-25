@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "matches" ADD COLUMN     "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN     "updateAt" TIMESTAMP(3);
+
+-- AlterTable
+ALTER TABLE "users" ADD COLUMN     "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN     "updateAt" TIMESTAMP(3);

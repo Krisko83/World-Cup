@@ -9,17 +9,7 @@ async function createMatch(matchData) {
 };
 
 async function getAll(params) {
-    const matches = await prisma.match.findMany({
-        select: {
-            id: true,
-            imageUrl: true,
-            homeGoals: true,
-            awayGoals: true,
-            homeTeam: true,
-            awayTeam: true,
-            stage: true
-        }
-    });
+    const matches = await prisma.match.findMany();
 
     return matches;
 }
@@ -43,8 +33,6 @@ async function remove(matchId) {
 }
 
 async function update(matchData, matchId) {
-    console.log(matchData);
-
     const match = await prisma.match.update({
         where: {
             id: matchId
@@ -87,7 +75,7 @@ async function checkIfLike(userId, matchId) {
         },
     });
 
-    return checked?.liked.length === 1;
+    return checked.liked.length === 1;
 };
 
 
@@ -106,8 +94,7 @@ async function getLikes(matchId) {
     });
 
     return likes._count.likes;
-
-}
+};
 
 const matchRepo = {
     createMatch,
