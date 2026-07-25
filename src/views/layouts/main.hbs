@@ -9,7 +9,13 @@
 </head>
 
 <body>
-  <!-- <div><div class="errorContainer"><p>Error message</p></div></div> -->
+  {{#if error}}
+  <div>
+    <div class="errorContainer">
+      <p>{{error}}</p>
+    </div>
+  </div>
+  {{/if}}
   <div id="wrapper">
     <header>
       <div style="font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;letter-spacing:2px;color:#FFD700;">⚽ WC
@@ -33,8 +39,8 @@
         {{/if}}
       </nav>
     </header>
- 
-      {{{body}}}
+
+    {{{body}}}
 
     <footer>World Cup 2026 Tracker &copy; SoftUni JS Back-End Exam 2026</footer>
   </div>

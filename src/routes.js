@@ -9,5 +9,8 @@ routes.use('/', homeController);
 routes.use('/auth', authController);
 routes.use('/matches', matchController);
 
+routes.use('*url', (req, res) => {
+    res.render('404')
+})
 
 export default routes;

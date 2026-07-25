@@ -37,12 +37,20 @@
           <span id="details-description">{{match.description}}</span>
         </p>
       </div>
+      {{#if user}}
       <div id="action-buttons">
+        {{#if isOwner}}
         <a href="/matches/edit/{{match.id}}" id="edit-btn">✏️ Edit</a>
         <a href="/matches/delete/{{match.id}}" id="delete-btn">🗑️ Delete</a>
-        <a href="/matches /like/{{match.id}}" id="like-btn">⭐ Like</a>
-        <!-- <p id="already-liked">⭐ You already liked this match!</p> -->
+        {{else}}
+        {{#if liked}}
+        <p id="already-liked">⭐ You already liked this match!</p>
+        {{else}}
+        <a href="/matches/like/{{match.id}}" id="like-btn">⭐ Like</a>
+        {{/if}}
+        {{/if}}
       </div>
     </div>
+    {{/if}}
   </section>
 </main>

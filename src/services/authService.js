@@ -20,13 +20,13 @@ async function register(userData) {
 
 async function login(userData) {
     const user = await userRepo.getUserByEmail(userData.email);
-
+ 
     if (!user) {
         throw new Error('Invalid User or Password!')
     }
 
-    const isPassValid = bcrypt.compare(userData.password, user.password);
-
+    const isPassValid = await bcrypt.compare(userData.password, user.password);
+ 
     if (!isPassValid) {
         throw new Error('Invalid User or Password!')
     };

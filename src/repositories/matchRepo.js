@@ -42,12 +42,63 @@ async function remove(matchId) {
     return match;
 }
 
+async function update(matchData, matchId) {
+    console.log(matchData);
+
+    const match = await prisma.match.update({
+        where: {
+            id: matchId
+        },
+        data: matchData
+    });
+
+    return match;
+}
+
+async function like(userId, matchId) {
+    const like = await prisma.user.update({
+        where: {
+            id: userId
+        },
+        data: {
+            liked: {
+                connect: { id: matchId }
+            }
+        }
+    })
+
+    return like;
+};
+
+async function checkIfLike(userId, matchId) {
+    const checked = await prisma.user.findUnique({
+        where: {
+            id: userId
+        },
+        select: {
+            liked: {
+                where: {
+                    id: matchId
+                },
+                select: {
+                    id: true
+                },
+            },
+        },
+    });
+ 
+    return checked?.liked.length === 1;
+};
+
 
 const matchRepo = {
     createMatch,
     getAll,
     getById,
-    remove
+    remove,
+    update,
+    like,
+    checkIfLike
 };
 
 export default matchRepo

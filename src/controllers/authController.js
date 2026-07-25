@@ -6,11 +6,11 @@ import { isAuth, isGuest } from "../middlewares/authMiddleware";
 
 const authController = Router();
 
-authController.get('/register',isGuest, (req, res) => {
+authController.get('/register', isGuest, (req, res) => {
     res.render('auth/register')
 });
 
-authController.post('/register',isGuest, async (req, res) => {
+authController.post('/register', isGuest, async (req, res) => {
     const userData = req.body;
 
     try {
@@ -27,16 +27,16 @@ authController.post('/register',isGuest, async (req, res) => {
 });
 
 
-authController.get('/login',isGuest, (req, res) => {
+authController.get('/login', isGuest, (req, res) => {
     res.render('auth/login')
 });
 
-authController.post('/login',isGuest,async (req, res) => {
+authController.post('/login', isGuest, async (req, res) => {
     const userData = req.body;
 
     try {
         const token = await authService.login(userData);
-         
+
         res.cookie('auth', token);
         res.redirect('/');
     } catch (err) {
@@ -44,11 +44,11 @@ authController.post('/login',isGuest,async (req, res) => {
 
         res.render('auth/login', { userData, error })
     }
-    res.render('auth/login')
+
 });
 
 
-authController.get('/logout',isAuth, (req, res) => {
+authController.get('/logout', isAuth, (req, res) => {
     res.clearCookie('auth');
     res.redirect('/');
 })

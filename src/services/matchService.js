@@ -16,11 +16,26 @@ function remove(matchId){
     return matchRepo.remove(matchId)
 }
 
+function update(matchData, matchId) {
+    return matchRepo.update(matchData, matchId)
+}
+
+function like(userId, matchId) {
+    return matchRepo.like(userId, matchId)
+};
+
+function checkIfLike(userId, matchId){
+    return matchRepo.checkIfLike(userId, matchId)
+}
+
 const matchService = {
     createMatch,
     getAll,
     getById,
-    remove
+    remove,
+    update,
+    like,
+    checkIfLike
 };
 
 export  default matchService;
