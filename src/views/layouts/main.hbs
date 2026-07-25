@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/styles/styles.css" />
-  <title>World Cup 2026</title>
+  <title>{{#if pageTitle}}{{pageTitle}}{{else}}World Cup{{/if}}</title>
 </head>
 
 <body>
@@ -20,14 +20,17 @@
           <a href="/matches/dashboard">Dashboard</a>
           <a href="/matches/report">Report</a>
         </div>
+        {{#if user}}
         <div class="user">
           <a href="/matches/create">Add Match</a>
           <a href="/auth/logout">Logout</a>
         </div>
+        {{else}}
         <div class="guest">
           <a href="/auth/login">Login</a>
           <a href="/auth/register">Register</a>
         </div>
+        {{/if}}
       </nav>
     </header>
  
