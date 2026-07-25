@@ -18,7 +18,8 @@ export function authMiddleware(req, res, next) {
     }
 
     next();
-}
+};
+
 
 export function isAuth(req, res, next) {
     if (!req.user) {
@@ -26,7 +27,8 @@ export function isAuth(req, res, next) {
     }
 
     next();
-}
+};
+
 
 export function isGuest(req, res, next) {
     if (req.user) {
@@ -34,4 +36,4 @@ export function isGuest(req, res, next) {
     }
 
     next();
-}
+};
