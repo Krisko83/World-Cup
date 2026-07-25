@@ -27,10 +27,9 @@ matchController.post('/create', isAuth, async (req, res) => {
         res.redirect('/')
     } catch (err) {
         const error = getErrorMessage(err);
-        console.log(error);
-
+  
         const options = createOptions(data);
-        res.render('matches/create', { data, options })
+        res.render('matches/create', { data, options, error })
     }
 
 });
@@ -54,12 +53,17 @@ matchController.get('/details/:matchId', async (req, res) => {
     const matchId = req.params.matchId;
     const userId = req.user.id;
 
-    const match = await matchService.getById(matchId);
+    try {
+        const match = await matchService.getById(matchId);
 
-    const isOwner = match.ownerId === userId;
-    const liked = await matchService.checkIfLike(userId, matchId);  
-    
-    res.render('matches/details', { match, isOwner, liked })
+        const isOwner = match.ownerId === userId;
+        const liked = await matchService.checkIfLike(userId, matchId);
+
+        res.render('matches/details', { match, isOwner, liked })
+    } catch (error) {
+        res.render('404')
+    }
+
 })
 
 matchController.get('/delete/:matchId', isAuth, async (req, res) => {
@@ -94,6 +98,7 @@ matchController.post('/edit/:matchId', isAuth, async (req, res) => {
     } catch (err) {
         const error = getErrorMessage(err)
         const options = createOptions(matchData);
+
         res.render('matches/edit', { match: matchData, options, error })
     };
 });
@@ -106,8 +111,6 @@ matchController.get('/like/:matchId', isAuth, async (req, res) => {
     await matchService.like(userId, matchId);
 
     res.redirect(`/matches/details/${matchId}`)
-})
-
-
+});
 
 export default matchController;
