@@ -28,6 +28,10 @@ function checkIfLike(userId, matchId){
     return matchRepo.checkIfLike(userId, matchId)
 }
 
+function getLikes(matchId) { 
+    return matchRepo.getLikes(matchId)
+};
+
 const matchService = {
     createMatch,
     getAll,
@@ -35,7 +39,8 @@ const matchService = {
     remove,
     update,
     like,
-    checkIfLike
+    checkIfLike,
+    getLikes
 };
 
 export  default matchService;

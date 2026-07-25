@@ -9,7 +9,7 @@ import { error } from "node:console";
 
 const matchController = Router();
 
-matchController.get('/create', (req, res) => {
+matchController.get('/create',isAuth, (req, res) => {
     const options = createOptions()
     res.render('matches/create', { options });
 });
@@ -24,10 +24,10 @@ matchController.post('/create', isAuth, async (req, res) => {
 
         const match = await matchService.createMatch(matchData);
 
-        res.redirect('/')
+        res.redirect('/matches/dashboard')
     } catch (err) {
         const error = getErrorMessage(err);
-  
+
         const options = createOptions(data);
         res.render('matches/create', { data, options, error })
     }
@@ -51,17 +51,19 @@ matchController.get('/dashboard', async (req, res) => {
 
 matchController.get('/details/:matchId', async (req, res) => {
     const matchId = req.params.matchId;
-    const userId = req.user.id;
+    const userId = req.user?.id;
 
     try {
         const match = await matchService.getById(matchId);
-
-        const isOwner = match.ownerId === userId;
-        const liked = await matchService.checkIfLike(userId, matchId);
-
-        res.render('matches/details', { match, isOwner, liked })
-    } catch (error) {
-        res.render('404')
+ 
+        const isOwner = match.ownerId === userId; 
+        const likes = await matchService.getLikes(matchId);;
+        const liked = userId ? await matchService.checkIfLike(userId, matchId) : false;
+    
+        res.render('matches/details', { match, isOwner, liked , likes})
+    } catch (err) {
+        const error = getErrorMessage(err)
+        res.render('404', { error })
     }
 
 })

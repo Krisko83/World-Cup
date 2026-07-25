@@ -86,10 +86,28 @@ async function checkIfLike(userId, matchId) {
             },
         },
     });
- 
+
     return checked?.liked.length === 1;
 };
 
+
+async function getLikes(matchId) {
+    const likes = await prisma.match.findUnique({
+        where: {
+            id: matchId
+        },
+        select: {
+            _count: {
+                select: {
+                    likes: true
+                }
+            }
+        }
+    });
+
+    return likes._count.likes;
+
+}
 
 const matchRepo = {
     createMatch,
@@ -98,7 +116,8 @@ const matchRepo = {
     remove,
     update,
     like,
-    checkIfLike
+    checkIfLike,
+    getLikes
 };
 
 export default matchRepo
