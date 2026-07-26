@@ -73,7 +73,7 @@ matchController.get('/delete/:matchId', isAuth, async (req, res) => {
 
     const match = await matchService.remove(matchId);
 
-    res.redirect('/dashboard')
+    res.redirect('/matches/dashboard')
 });
 
 matchController.get('/edit/:matchId', isAuth, async (req, res) => {
